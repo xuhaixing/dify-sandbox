@@ -19,7 +19,7 @@ docker rmi xuhaixing/dify-sandbox:$version
 dockerfile_path="docker/arm64/dify-sandbox.Dockerfile"
 
 
-docker build -f $dockerfile_path --build-arg APP_ENV=$env -t xuhaixing/dify-sandbox:$version .
+docker build -f $dockerfile_path --progress=plain --build-arg APP_ENV=$env -t xuhaixing/dify-sandbox:$version .
 
 
 echo "Starting new dify-sandbox container..."

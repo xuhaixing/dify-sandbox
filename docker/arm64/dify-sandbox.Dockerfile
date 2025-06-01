@@ -1,11 +1,9 @@
 FROM golang:1.23-alpine AS base
-# copy project
-COPY . /app
-
-# set working directory
-WORKDIR /app
 
 RUN apk add pkgconfig gcc libseccomp-dev  musl-dev
+
+# copy project
+COPY . /app
 
 # using goproxy if you have network issues
 ENV GOPROXY=https://goproxy.cn,direct
@@ -14,13 +12,12 @@ FROM base AS builder
 
 WORKDIR /app
 
-RUN chmod +x ./build/build_arm64.sh &&  ./build/build_arm64.sh
-
+RUN chmod +x ./build/build_arm64.sh &&  ./build/build_arm64.sh && ls -al /app
 
 FROM python:3.10-slim-bookworm
 
-RUN rm -rf etc/apt/sources.list.d/*
-ADD docker/sources.list /etc/apt/
+RUN rm -rf /etc/apt/sources.list.d/*
+ADD ./docker/sources.list /etc/apt/
 
 
 # if you located in China, you can use aliyun mirror to speed up
@@ -46,6 +43,7 @@ RUN apt-get update \
 # COPY env /env
 
 COPY --from=builder /app/main /app/env /
+RUN ls -al /
 
 # copy config file
 COPY conf/config.yaml /conf/config.yaml
