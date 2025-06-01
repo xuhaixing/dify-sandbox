@@ -5,16 +5,16 @@ COPY . /app
 # set working directory
 WORKDIR /app
 
-RUN sh ./install.sh
+RUN apk add pkgconfig gcc libseccomp-dev  musl-dev
 
 # using goproxy if you have network issues
 ENV GOPROXY=https://goproxy.cn,direct
 
-FROM base as builder
+FROM base AS builder
 
 WORKDIR /app
 
-RUN sh ./build/build_arm64.sh
+RUN chmod +x ./build/build_arm64.sh &&  ./build/build_arm64.sh
 
 
 FROM python:3.10-slim-bookworm
