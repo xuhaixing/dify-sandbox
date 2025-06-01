@@ -3,7 +3,7 @@ FROM golang:1.23-bookworm AS base
 # copy project
 COPY . /app
 # RUN chmod +x /app/install.sh && /app/install.sh
-RUN apt-get install pkg-config gcc libseccomp-dev
+RUN apt update && apt-get install -y pkg-config gcc libseccomp-dev
 
 # using goproxy if you have network issues
 ENV GOPROXY=https://goproxy.cn,direct
