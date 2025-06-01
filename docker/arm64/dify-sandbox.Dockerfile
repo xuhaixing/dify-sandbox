@@ -1,9 +1,8 @@
-FROM golang:1.23-alpine AS base
-
-RUN apk add pkgconfig gcc libseccomp-dev  musl-dev
+FROM golang:1.23-bookworm AS base
 
 # copy project
 COPY . /app
+RUN chmod +x /app/install.sh && /app/install.sh
 
 # using goproxy if you have network issues
 ENV GOPROXY=https://goproxy.cn,direct
@@ -43,7 +42,6 @@ RUN apt-get update \
 # COPY env /env
 
 COPY --from=builder /app/main /app/env /
-RUN ls -al /
 
 # copy config file
 COPY conf/config.yaml /conf/config.yaml
@@ -51,6 +49,8 @@ COPY conf/config.yaml /conf/config.yaml
 COPY dependencies/python-requirements.txt /dependencies/python-requirements.txt
 # copy entrypoint
 COPY docker/entrypoint.sh /entrypoint.sh
+
+RUN ls -al /env && ldd /env || true
 
 RUN chmod +x /main /env /entrypoint.sh \
     && pip3 install --no-cache-dir httpx==0.27.2 requests==2.32.3 jinja2==3.1.6 PySocks httpx[socks] -i https://mirrors.aliyun.com/pypi/simple/ \
