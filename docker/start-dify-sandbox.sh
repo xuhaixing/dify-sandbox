@@ -1,10 +1,11 @@
 #!bin/bash
 
 # 启动指令示例：
-# sh docker/arm64/start-dify-sandbox.sh 160 1.4.1
+# sh docker/start-dify-sandbox.sh 160  1.4.1 arm64
 
 env=$1
 version=$2
+archive=$3
 
 if [ -z "$env" ] || [ -z "$version" ]; then
   echo "Usage: $0 <env> <version>"
@@ -16,9 +17,10 @@ docker stop dify-sandbox
 docker rm dify-sandbox
 docker rmi xuhaixing/dify-sandbox:$version
 
-dockerfile_path="docker/arm64/dify-sandbox.Dockerfile"
+dockerfile_path="docker/$archive/dify-sandbox.Dockerfile"
 
 
+# docker build -f $dockerfile_path --progress=plain --build-arg APP_ENV=$env -t xuhaixing/dify-sandbox:$version .
 docker build -f $dockerfile_path --progress=plain --build-arg APP_ENV=$env -t xuhaixing/dify-sandbox:$version .
 
 
