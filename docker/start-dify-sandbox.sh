@@ -15,7 +15,7 @@ fi
 
 docker stop dify-sandbox
 docker rm dify-sandbox
-docker rmi xuhaixing/dify-sandbox:$version
+docker rmi $(docker images | grep "dify-sandbox" | awk '{print $3}')
 
 dockerfile_path="docker/$archive/dify-sandbox.Dockerfile"
 
