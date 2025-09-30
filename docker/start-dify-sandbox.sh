@@ -1,7 +1,8 @@
 #!bin/bash
 
 # 启动指令示例：
-# sh docker/start-dify-sandbox.sh 160  1.4.1 arm64
+# sh docker/start-dify-sandbox.sh 160  1.9.1 arm64
+# sh docker/start-dify-sandbox.sh 160  1.9.1 amd64
 
 env=$1
 version=$2
