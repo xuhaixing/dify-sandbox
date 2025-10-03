@@ -92,7 +92,7 @@ RUN chmod +x /main /env /entrypoint.sh \
     && /env \
     && rm -f /env
 
-ENV NODE_TAR_XZ=/opt/node-${NODEJS_VERSION}-linux-${NODEJS_ARCH}.tar.xz
-ENV NODE_DIR=/opt/node-${NODEJS_VERSION}-linux-${NODEJS_ARCH}
+ENV NODE_TAR_XZ=/opt/node-${NODEJS_VERSION}-${NODEJS_ARCH}.tar.xz
+ENV NODE_DIR=/opt/node-${NODEJS_VERSION}-${NODEJS_ARCH}
 
 ENTRYPOINT ["/entrypoint.sh"]
