@@ -28,6 +28,6 @@ docker build -f docker/dify-sandbox.Dockerfile --progress=plain --build-arg APP_
 
 echo "Starting new dify-sandbox container..."
 docker run -d --name dify-sandbox -p 18194:8194 xuhaixing/dify-sandbox:$version
-docker update dify-sandbox -m 1524M --memory-swap 1524M
+docker update dify-sandbox -m 2048M --memory-swap 2048M
 
 echo "Done. Containers are up and running."

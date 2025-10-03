@@ -2,9 +2,9 @@ app:
   port: 8194
   debug: True
   key: dify-sandbox
-max_workers: 10
-max_requests: 100
-worker_timeout: 10
+max_workers: 7
+max_requests: 50
+worker_timeout: 30
 python_path: /usr/local/bin/python3
 enable_network: True # please make sure there is no network risk in your environment
 enable_preload: False # please keep it as False for security purposes
