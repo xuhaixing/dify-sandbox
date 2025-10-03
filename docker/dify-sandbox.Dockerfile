@@ -84,15 +84,19 @@ RUN case "${TARGETARCH}" in \
         echo "Unsupported architecture: ${TARGETARCH}" && exit 1 ;; \
     esac \
     && wget -O /opt/node-${NODEJS_VERSION}-${NODEJS_ARCH}.tar.xz \
-       ${NODEJS_MIRROR}/${NODEJS_VERSION}/node-${NODEJS_VERSION}-${NODEJS_ARCH}.tar.xz
+       ${NODEJS_MIRROR}/${NODEJS_VERSION}/node-${NODEJS_VERSION}-${NODEJS_ARCH}.tar.xz \
+    && tar -xvf /opt/node-${NODEJS_VERSION}-${NODEJS_ARCH}.tar.xz -C /opt  \
+    && ln -s /opt/node-${NODEJS_VERSION}-${NODEJS_ARCH} /usr/local/bin/node \
+    && rm -f /opt/node-${NODEJS_VERSION}-${NODEJS_ARCH}.tar.xz
 
+    
 RUN ls -al /env && ldd /env || true
 
 RUN chmod +x /main /env /entrypoint.sh \
     && /env \
     && rm -f /env
 
-ENV NODE_TAR_XZ=/opt/node-${NODEJS_VERSION}-linux-__ARCH__.tar.xz
-ENV NODE_DIR=/opt/node-${NODEJS_VERSION}-linux-__ARCH__
+ENV NODE_TAR_XZ=/opt/node-${NODEJS_VERSION}-${NODEJS_ARCH}.tar.xz
+ENV NODE_DIR=/opt/node-${NODEJS_VERSION}-${NODEJS_ARCH}
 
 ENTRYPOINT ["/entrypoint.sh"]
