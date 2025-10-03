@@ -18,11 +18,12 @@ docker stop dify-sandbox
 docker rm dify-sandbox
 docker rmi $(docker images | grep "dify-sandbox" | awk '{print $3}')
 
-dockerfile_path="docker/$archive/dify-sandbox.Dockerfile"
+# dockerfile_path="docker/$archive/dify-sandbox.Dockerfile"
 
 
 # docker build -f $dockerfile_path --progress=plain --build-arg APP_ENV=$env -t xuhaixing/dify-sandbox:$version .
-docker build -f $dockerfile_path --progress=plain --build-arg APP_ENV=$env -t xuhaixing/dify-sandbox:$version .
+# docker build -f $dockerfile_path --progress=plain --build-arg APP_ENV=$env -t xuhaixing/dify-sandbox:$version .
+docker build -f docker/dify-sandbox.Dockerfile --progress=plain --build-arg APP_ENV=$env --build-arg TARGETARCH=$archive -t xuhaixing/dify-sandbox:$version .
 
 
 echo "Starting new dify-sandbox container..."
